@@ -1,0 +1,61 @@
+# fork 专属：只构建实际部署的合并镜像(Dockerfile.kaneo)，只出 linux/amd64。
+# 刻意新建文件而不是改上游 docker.yml：上游每几天发一版，改动越少 merge 越安全。
+# 与上游 docker.yml 的区别：
+#   - 用内置 GITHUB_TOKEN，不需要额外配 GH_PACKAGE_TOKEN
+#   - 不跑 QEMU 交叉编译(部署机是 x86_64)，构建快数倍
+name: kz build image
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - "apps/docs/**"
+      - "apps/site/**"
+  workflow_dispatch:
+
+concurrency:
+  group: kz-image-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/kaneo
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+
+      - name: Build and push
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile.kaneo
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
