@@ -3,6 +3,7 @@
 		"appName": "Kaneo",
 		"actions": {
 			"cancel": "取消",
+			"confirm": "确认",
 			"close": "关闭",
 			"clearAll": "清空全部",
 			"delete": "删除",
@@ -14,7 +15,8 @@
 			"clearAllFilters": "清除全部筛选"
 		},
 		"a11y": {
-			"toggleSidebar": "切换侧边栏"
+			"toggleSidebar": "切换侧边栏",
+			"toggleTheme": "切换主题"
 		},
 		"sidebar": {
 			"title": "侧边栏",
@@ -1496,6 +1498,7 @@
 		"view": {
 			"board": "看板",
 			"list": "列表",
+			"label": "视图",
 			"backlogTab": "待办",
 			"tasksTab": "任务",
 			"ganttTab": "甘特图"
@@ -1994,6 +1997,7 @@
 			"cancelDialogTitle": "取消邀请？",
 			"cancelDialogDescription": "确定要取消发送给 {{email}} 的邀请吗？此操作无法撤销。",
 			"removeMember": "移除成员",
+			"removeMemberTitle": "移除团队成员",
 			"cancelInvitation": "取消邀请",
 			"removeSuccess": "团队成员移除成功",
 			"removeError": "移除团队成员失败",

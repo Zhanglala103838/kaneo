@@ -1,4 +1,5 @@
 import { Archive } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,6 +23,7 @@ export function ArchiveTasksModal({
   onConfirm,
   taskCount,
 }: ArchiveTasksModalProps) {
+  const { t } = useTranslation();
   const isSingular = taskCount === 1;
   const taskLabel = isSingular ? "completed task" : "completed tasks";
   const allLabel = isSingular ? "" : "all ";
@@ -39,7 +41,7 @@ export function ArchiveTasksModal({
                 <Archive className="h-6 w-6 text-primary" />
               </div>
               <DialogTitle className="text-2xl font-bold tracking-tight text-foreground leading-tight">
-                Archive Tasks
+                {t("tasks:bulk.archive")}
               </DialogTitle>
             </DialogHeader>
 
@@ -61,7 +63,7 @@ export function ArchiveTasksModal({
             onClick={onClose}
             className="text-muted-foreground hover:text-foreground hover:bg-accent min-w-[80px]"
           >
-            Cancel
+            {t("common:actions.cancel")}
           </Button>
           <Button
             type="button"
@@ -69,7 +71,7 @@ export function ArchiveTasksModal({
             onClick={onConfirm}
             className="shadow-sm min-w-[100px] font-medium"
           >
-            Confirm
+            {t("common:actions.confirm")}
           </Button>
         </DialogFooter>
       </DialogContent>

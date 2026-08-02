@@ -3,6 +3,7 @@
 		"appName": "Kaneo",
 		"actions": {
 			"cancel": "Cancel",
+			"confirm": "Confirm",
 			"close": "Close",
 			"clearAll": "Clear all",
 			"delete": "Delete",
@@ -14,7 +15,8 @@
 			"clearAllFilters": "Clear all filters"
 		},
 		"a11y": {
-			"toggleSidebar": "Toggle sidebar"
+			"toggleSidebar": "Toggle sidebar",
+			"toggleTheme": "Toggle theme"
 		},
 		"sidebar": {
 			"title": "Sidebar",
@@ -1496,6 +1498,7 @@
 		"view": {
 			"board": "Board",
 			"list": "List",
+			"label": "View",
 			"backlogTab": "Backlog",
 			"tasksTab": "Tasks",
 			"ganttTab": "Gantt"
@@ -1994,6 +1997,7 @@
 			"cancelDialogTitle": "Cancel Invitation?",
 			"cancelDialogDescription": "Are you sure you want to cancel the invitation for {{email}}? This action cannot be undone.",
 			"removeMember": "Remove Member",
+			"removeMemberTitle": "Remove Team Member",
 			"cancelInvitation": "Cancel Invitation",
 			"removeSuccess": "Team member removed successfully",
 			"removeError": "Failed to remove team member",

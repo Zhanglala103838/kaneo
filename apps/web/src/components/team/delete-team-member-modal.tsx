@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Trash2, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import useDeleteWorkspaceUser from "@/hooks/mutations/workspace-user/use-delete-workspace-user";
 import useActiveWorkspace from "@/hooks/queries/workspace/use-active-workspace";
 import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
@@ -15,6 +16,7 @@ function DeleteTeamMemberModal({
   open: boolean;
   onClose: () => void;
 }) {
+  const { t } = useTranslation();
   const { data: workspace } = useActiveWorkspace();
   const workspaceId = workspace?.id ?? "";
   const { mutateAsync: deleteWorkspaceUser } = useDeleteWorkspaceUser();
@@ -42,7 +44,7 @@ function DeleteTeamMemberModal({
         <div className="bg-card rounded-lg shadow-xl">
           <div className="flex items-center justify-between p-4 border-b border-border">
             <DialogTitle className="text-lg font-semibold text-foreground">
-              Remove Team Member
+              {t("team:membersTable.removeMemberTitle")}
             </DialogTitle>
             <DialogClose
               className="text-muted-foreground hover:text-foreground"
@@ -68,7 +70,7 @@ function DeleteTeamMemberModal({
                   />
                 }
               >
-                Cancel
+                {t("common:actions.cancel")}
               </DialogClose>
               <Button
                 onClick={onRemoveMember}
@@ -76,7 +78,7 @@ function DeleteTeamMemberModal({
                 disabled={!canRemove}
               >
                 <Trash2 className="w-4 h-4 mr-2" />
-                Remove Member
+                {t("team:membersTable.removeMember")}
               </Button>
             </div>
           </div>
