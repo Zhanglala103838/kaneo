@@ -1495,7 +1495,10 @@
 		"boardSearchPlaceholder": "搜索工单...",
 		"view": {
 			"board": "看板",
-			"list": "列表"
+			"list": "列表",
+			"backlogTab": "待办",
+			"tasksTab": "任务",
+			"ganttTab": "甘特图"
 		},
 		"common": {
 			"selectTask": "选择任务",

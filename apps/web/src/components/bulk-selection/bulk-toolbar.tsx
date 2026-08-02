@@ -44,7 +44,7 @@ import { useGetActiveWorkspaceUsers } from "@/hooks/queries/workspace-users/use-
 import { useWorkspacePermission } from "@/hooks/use-workspace-permission";
 import { getColumnIcon } from "@/lib/column";
 import { getInitials } from "@/lib/get-initials";
-import { getPriorityLabel } from "@/lib/i18n/domain";
+import { getPriorityLabel, getStatusDisplayLabel } from "@/lib/i18n/domain";
 import { getPriorityIcon } from "@/lib/priority";
 import { toast } from "@/lib/toast";
 import useBulkSelectionStore from "@/store/bulk-selection";
@@ -294,7 +294,7 @@ function BulkToolbar() {
         label: t("tasks:bulk.changeStatus"),
         items: (project?.columns ?? []).map((col) => ({
           value: `status-${col.id}`,
-          label: col.name,
+          label: getStatusDisplayLabel(col.id, col.name),
           icon: getColumnIcon(col.id, col.isFinal, col.icon),
           onRun: () => {
             void handleBulkChangeStatus(col.id);

@@ -1495,7 +1495,10 @@
 		"boardSearchPlaceholder": "Search tickets...",
 		"view": {
 			"board": "Board",
-			"list": "List"
+			"list": "List",
+			"backlogTab": "Backlog",
+			"tasksTab": "Tasks",
+			"ganttTab": "Gantt"
 		},
 		"common": {
 			"selectTask": "Select task",
