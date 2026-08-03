@@ -332,7 +332,17 @@
 				"nameRequired": "姓名为必填项",
 				"nameShort": "姓名至少需要 2 个字符",
 				"invalidEmail": "邮箱地址无效"
-			}
+			},
+			"avatarHint": "支持 PNG、JPG、GIF、WebP，最大 5MB。",
+			"avatarUpload": "上传",
+			"avatarChange": "更换",
+			"avatarRemove": "移除",
+			"avatarUploading": "上传中…",
+			"avatarInvalidType": "请选择图片文件。",
+			"avatarTooLarge": "图片不能超过 5MB。",
+			"avatarUpdated": "头像已更新",
+			"avatarRemoved": "头像已移除",
+			"avatarUploadError": "头像更新失败"
 		},
 		"notificationsPage": {
 			"pageTitle": "通知",

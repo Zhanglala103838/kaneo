@@ -8,6 +8,7 @@ import { z } from "zod";
 import PageTitle from "@/components/page-title";
 import useAuth from "@/components/providers/auth-provider/hooks/use-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -18,6 +19,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import {
+  useDeleteUserAvatar,
+  useUploadUserAvatar,
+} from "@/hooks/mutations/use-update-user-avatar";
 import useUpdateUserProfile from "@/hooks/mutations/use-update-user-profile";
 import { getInitials } from "@/lib/get-initials";
 import { toast } from "@/lib/toast";
@@ -27,6 +32,10 @@ export const Route = createFileRoute(
 )({
   component: RouteComponent,
 });
+
+// Mirrors DEFAULT_MAX_AVATAR_UPLOAD_BYTES on the API so the user gets a
+// local error instead of a round trip that fails validation.
+const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
 
 type ProfileFormValues = {
   name: string;
@@ -53,6 +62,12 @@ function RouteComponent() {
   const queryClient = useQueryClient();
   const { mutateAsync: updateProfile } = useUpdateUserProfile();
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const { mutateAsync: uploadAvatar, isPending: isUploadingAvatar } =
+    useUploadUserAvatar();
+  const { mutateAsync: removeAvatar, isPending: isRemovingAvatar } =
+    useDeleteUserAvatar();
+  const isAvatarBusy = isUploadingAvatar || isRemovingAvatar;
   const isSavingRef = useRef(false);
   const queuedSaveRef = useRef<ProfileFormValues | null>(null);
   const lastSavedRef = useRef<NormalizedProfileValues | null>(null);
@@ -134,6 +149,50 @@ function RouteComponent() {
     [t, updateProfile, queryClient, profileForm],
   );
 
+  const handleAvatarSelected = useCallback(
+    async (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      // Reset immediately so picking the same file twice still fires onChange.
+      event.target.value = "";
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        toast.error(t("settings:informationPage.avatarInvalidType"));
+        return;
+      }
+
+      if (file.size > MAX_AVATAR_BYTES) {
+        toast.error(t("settings:informationPage.avatarTooLarge"));
+        return;
+      }
+
+      try {
+        await uploadAvatar(file);
+        toast.success(t("settings:informationPage.avatarUpdated"));
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? error.message
+            : t("settings:informationPage.avatarUploadError"),
+        );
+      }
+    },
+    [t, uploadAvatar],
+  );
+
+  const handleAvatarRemove = useCallback(async () => {
+    try {
+      await removeAvatar();
+      toast.success(t("settings:informationPage.avatarRemoved"));
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : t("settings:informationPage.avatarUploadError"),
+      );
+    }
+  }, [removeAvatar, t]);
+
   const debouncedSave = useCallback(
     (data: ProfileFormValues) => {
       if (debounceTimeoutRef.current) {
@@ -189,18 +248,55 @@ function RouteComponent() {
           </div>
 
           <div className="space-y-4 border border-border rounded-md p-4 bg-sidebar">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div className="space-y-0.5">
                 <p className="text-sm font-medium">
                   {t("settings:informationPage.profilePicture")}
                 </p>
+                <p className="text-xs text-muted-foreground">
+                  {t("settings:informationPage.avatarHint")}
+                </p>
               </div>
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={user?.image ?? ""} alt={user?.name || ""} />
-                <AvatarFallback className="text-xs font-medium border border-border/30">
-                  {getInitials(user?.name)}
-                </AvatarFallback>
-              </Avatar>
+              <div className="flex items-center gap-2">
+                <Avatar className="h-10 w-10">
+                  <AvatarImage src={user?.image ?? ""} alt={user?.name || ""} />
+                  <AvatarFallback className="text-xs font-medium border border-border/30">
+                    {getInitials(user?.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleAvatarSelected}
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  type="button"
+                  disabled={isAvatarBusy}
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  {isUploadingAvatar
+                    ? t("settings:informationPage.avatarUploading")
+                    : user?.image
+                      ? t("settings:informationPage.avatarChange")
+                      : t("settings:informationPage.avatarUpload")}
+                </Button>
+                {user?.image ? (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    type="button"
+                    className="text-destructive hover:text-destructive"
+                    disabled={isAvatarBusy}
+                    onClick={handleAvatarRemove}
+                  >
+                    {t("settings:informationPage.avatarRemove")}
+                  </Button>
+                ) : null}
+              </div>
             </div>
 
             <Separator />
@@ -220,7 +316,7 @@ function RouteComponent() {
                         </div>
                         <FormControl>
                           <Input
-                            className="w-48"
+                            className="w-full max-w-72"
                             placeholder={t(
                               "settings:informationPage.fullNamePlaceholder",
                             )}
@@ -248,13 +344,17 @@ function RouteComponent() {
                         </div>
                         <FormControl>
                           <Input
-                            className="w-48"
+                            // Grows with the row instead of a fixed w-48, which
+                            // cut off ordinary addresses. The field is
+                            // read-only, so title= keeps longer ones readable.
+                            className="w-full max-w-72"
                             placeholder={t(
                               "settings:informationPage.emailPlaceholder",
                             )}
                             {...field}
                             disabled
                             value={user?.email || ""}
+                            title={user?.email || ""}
                           />
                         </FormControl>
                       </div>

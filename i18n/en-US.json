@@ -332,7 +332,17 @@
 				"nameRequired": "Name is required",
 				"nameShort": "Name must be at least 2 characters",
 				"invalidEmail": "Invalid email address"
-			}
+			},
+			"avatarHint": "PNG, JPG, GIF or WebP. Up to 5MB.",
+			"avatarUpload": "Upload",
+			"avatarChange": "Change",
+			"avatarRemove": "Remove",
+			"avatarUploading": "Uploading…",
+			"avatarInvalidType": "Choose an image file.",
+			"avatarTooLarge": "Image must be 5MB or smaller.",
+			"avatarUpdated": "Profile picture updated",
+			"avatarRemoved": "Profile picture removed",
+			"avatarUploadError": "Failed to update profile picture"
 		},
 		"notificationsPage": {
 			"pageTitle": "Notifications",

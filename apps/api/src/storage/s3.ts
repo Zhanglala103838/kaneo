@@ -13,6 +13,7 @@ import { config } from "dotenv-mono";
 config();
 
 const DEFAULT_MAX_IMAGE_UPLOAD_BYTES = 10 * 1024 * 1024;
+const DEFAULT_MAX_AVATAR_UPLOAD_BYTES = 5 * 1024 * 1024;
 const DEFAULT_PRESIGN_TTL_SECONDS = 300;
 
 const allowedImageMimeTypes = new Set([
@@ -315,6 +316,72 @@ export async function createTaskImageUploadUrl(
 
 export function assertStorageConfigured() {
   return getStorageConfig();
+}
+
+/**
+ * Avatars use one deterministic key per user instead of an `asset` row: that
+ * table requires a workspace and project, and an avatar belongs to neither.
+ * Uploading again overwrites in place, so there is never more than one object
+ * per user to track or clean up.
+ */
+export function buildUserAvatarKey(userId: string) {
+  return `avatars/user/${sanitizePathSegment(userId)}`;
+}
+
+export function getMaxAvatarUploadBytes() {
+  return parsePositiveInt(
+    process.env.S3_MAX_AVATAR_UPLOAD_BYTES,
+    DEFAULT_MAX_AVATAR_UPLOAD_BYTES,
+  );
+}
+
+export function validateAvatarUploadInput(contentType: string, size: number) {
+  if (!isImageContentType(contentType)) {
+    throw new Error("Avatar must be an image.");
+  }
+
+  if (size <= 0) {
+    throw new Error("Upload size must be greater than zero.");
+  }
+
+  const maxBytes = getMaxAvatarUploadBytes();
+  if (size > maxBytes) {
+    throw new Error(
+      `Avatar exceeds the maximum upload size of ${Math.floor(maxBytes / (1024 * 1024))}MB.`,
+    );
+  }
+}
+
+export function resolveUserAvatarKey(userId: string) {
+  const config = getStorageConfig();
+  return applyKeyPrefix(config.keyPrefix, buildUserAvatarKey(userId));
+}
+
+export async function createUserAvatarUploadUrl(
+  userId: string,
+  contentType: string,
+): Promise<TaskImageUploadUrl> {
+  const config = getStorageConfig();
+  const client = getClient(config);
+  const key = applyKeyPrefix(config.keyPrefix, buildUserAvatarKey(userId));
+
+  const command = new PutObjectCommand({
+    Bucket: config.bucket,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  const uploadUrl = await getSignedUrl(client, command, {
+    expiresIn: config.presignTtlSeconds,
+  });
+
+  return {
+    key,
+    uploadUrl,
+    headers: {
+      "Content-Type": contentType,
+    },
+  };
 }
 
 export function assertTaskImageKeyMatchesContext(

@@ -55,6 +55,7 @@ import task from "./task";
 import taskRelation from "./task-relation";
 import telegramIntegration from "./telegram-integration";
 import timeEntry from "./time-entry";
+import userAvatar from "./user-avatar";
 import {
   authenticateApiRequest,
   resolveAssetBearerOrCookie,
@@ -587,6 +588,7 @@ export function createApp() {
   const workflowRuleApi = api.route("/workflow-rule", workflowRule);
   const invitationApi = api.route("/invitation", invitation);
   const workspaceApi = api.route("/workspace", workspace);
+  const userAvatarApi = api.route("/user-avatar", userAvatar);
 
   app.route(
     "/",
@@ -749,6 +751,7 @@ export function createApp() {
     taskRelationApi,
     telegramIntegrationApi,
     timeEntryApi,
+    userAvatarApi,
     workflowRuleApi,
     workspaceApi,
     oauthApi,
@@ -866,6 +869,7 @@ const {
   taskRelationApi,
   telegramIntegrationApi,
   timeEntryApi,
+  userAvatarApi,
   workflowRuleApi,
   workspaceApi,
   oauthApi,
@@ -903,6 +907,7 @@ export type AppType =
   | typeof workflowRuleApi
   | typeof invitationApi
   | typeof workspaceApi
+  | typeof userAvatarApi
   | typeof publicProjectApi
   | typeof invitationPublicApi
   | typeof oauthApi;
