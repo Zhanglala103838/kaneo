@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
-import { createSlug } from "@/lib/utils/create-slug";
+import { createWorkspaceBaseSlug } from "@/lib/utils/create-workspace-slug";
 
 type UpdateWorkspaceRequest = {
   workspaceId: string;
@@ -32,7 +32,9 @@ function useUpdateWorkspace() {
       if (name !== undefined) {
         updateData.name = name;
         if (slug === undefined) {
-          updateData.slug = createSlug(name);
+          // Same non-empty guarantee the create path already had: a name made
+          // only of punctuation or emoji still has to yield a usable slug.
+          updateData.slug = createWorkspaceBaseSlug(name);
         }
       }
 
