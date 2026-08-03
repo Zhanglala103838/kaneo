@@ -157,7 +157,8 @@
 				"account_not_linked": "该身份无法关联到现有账号。请先使用邮箱登录验证账号，再重新尝试 SSO 登录。若邮箱登录不可用，请联系管理员。",
 				"oauth_code_verification_failed": "OAuth 验证失败，请重试。",
 				"registration_is_currently_disabled_you_need_a_valid_invitation_to_create_an_account_": "当前注册功能已关闭，需要有效邀请才能创建账号。"
-			}
+			},
+			"instanceStatusError": "无法连接服务器，请稍后重试。"
 		},
 		"providers": {
 			"google": "Google",
@@ -192,7 +193,10 @@
 			"signingIn": "正在登录…",
 			"continueAsGuest": "以访客身份继续",
 			"toggleMessage": "已经有账号？",
-			"toggleLink": "登录"
+			"toggleLink": "登录",
+			"instanceAdminTitle": "初始化你的 Kaneo 实例",
+			"instanceAdminSubtitle": "该账号将成为拥有完整权限的实例管理员。",
+			"instanceStatusError": "无法连接服务器，请稍后重试。"
 		},
 		"verifyOtp": {
 			"pageTitle": "验证码",
@@ -565,6 +569,21 @@
 			"validation": {
 				"nameRequired": "请输入工作区名称",
 				"nameShort": "工作区名称至少需要 2 个字符"
+			},
+			"transferOwnership": {
+				"title": "转让所有权",
+				"subtitle": "把此工作区移交给其他成员。你将被降为管理员，并失去仅所有者可用的权限。",
+				"pickerLabel": "新所有者",
+				"pickerHint": "对方将成为此工作区的唯一所有者。",
+				"noEligibleMembers": "至少邀请一位其他成员后才能转让所有权。",
+				"pickerPlaceholder": "选择成员",
+				"button": "转让",
+				"dialogTitle": "确认转让所有权？",
+				"dialogDescription": "{{name}} 将成为 {{workspace}} 的唯一所有者。你会保留管理员权限，但失去仅所有者可用的能力，例如删除工作区或再次转让。",
+				"transferring": "正在转让…",
+				"confirm": "转让所有权",
+				"toastSuccess": "所有权已转让",
+				"toastError": "转让所有权失败"
 			}
 		},
 		"workspaceRoles": {
@@ -1562,6 +1581,15 @@
 					"swift": "Swift",
 					"typescript": "TypeScript",
 					"yaml": "YAML"
+				},
+				"table": {
+					"addColumnBefore": "在左侧插入列",
+					"addColumnAfter": "在右侧插入列",
+					"deleteColumn": "删除列",
+					"addRowBefore": "在上方插入行",
+					"addRowAfter": "在下方插入行",
+					"deleteRow": "删除行",
+					"deleteTable": "删除表格"
 				}
 			}
 		}
@@ -1732,7 +1760,8 @@
 			"deleteError": "删除任务失败",
 			"deleteDialogTitle": "删除任务？",
 			"deleteDialogDescription": "此操作将永久删除该任务及其所有数据，且无法撤销。",
-			"deleteAction": "删除任务"
+			"deleteAction": "删除任务",
+			"completeAria": "标记子任务为完成"
 		},
 		"properties": {
 			"title": "属性",
@@ -1961,6 +1990,17 @@
 			"searchActions": "搜索操作...",
 			"noActionsFound": "未找到操作。",
 			"changeStatus": "更改状态"
+		},
+		"editor": {
+			"table": {
+				"addColumnBefore": "在左侧插入列",
+				"addColumnAfter": "在右侧插入列",
+				"deleteColumn": "删除列",
+				"addRowBefore": "在上方插入行",
+				"addRowAfter": "在下方插入行",
+				"deleteRow": "删除行",
+				"deleteTable": "删除表格"
+			}
 		}
 	},
 	"invitations": {
