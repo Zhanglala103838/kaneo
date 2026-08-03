@@ -23,6 +23,7 @@ import { Input } from "@/components/ui/input";
 import { useGetTasks } from "@/hooks/queries/task/use-get-tasks";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/cn";
+import { formatDate, formatDateShort } from "@/lib/format";
 import { getStatusLabel } from "@/lib/i18n/domain";
 import { useUserPreferencesStore } from "@/store/user-preferences";
 
@@ -274,7 +275,7 @@ function RouteComponent() {
                         )}
                       >
                         <div className="h-4 text-[10px] font-medium text-muted-foreground">
-                          {showMonth ? format(day, "MMM") : ""}
+                          {showMonth ? formatDate(day, { month: "short" }) : ""}
                         </div>
                         <div
                           className={cn(
@@ -355,8 +356,8 @@ function RouteComponent() {
                                 {task.title}
                               </p>
                               <p className="w-full truncate text-[11px] leading-tight text-muted-foreground">
-                                {format(task.scheduleStart, "MMM d")} -{" "}
-                                {format(task.scheduleEnd, "MMM d")}
+                                {formatDateShort(task.scheduleStart)} -{" "}
+                                {formatDateShort(task.scheduleEnd)}
                                 {task.assigneeName
                                   ? ` • ${task.assigneeName}`
                                   : ""}

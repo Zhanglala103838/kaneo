@@ -1,7 +1,6 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useNavigate } from "@tanstack/react-router";
-import { format } from "date-fns";
 import { Calendar, CalendarClock, CalendarX } from "lucide-react";
 import { type CSSProperties, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -21,6 +20,7 @@ import useActiveWorkspace from "@/hooks/queries/workspace/use-active-workspace";
 import { useGetActiveWorkspaceUsers } from "@/hooks/queries/workspace-users/use-get-active-workspace-users";
 import { cn } from "@/lib/cn";
 import { dueDateStatusColors, getDueDateStatus } from "@/lib/due-date-status";
+import { formatDateShort } from "@/lib/format";
 import { getInitials } from "@/lib/get-initials";
 import { getPriorityIcon } from "@/lib/priority";
 import { toast } from "@/lib/toast";
@@ -191,7 +191,7 @@ export default function BacklogTaskRow({ task }: BacklogTaskRowProps) {
                   getDueDateStatus(task.dueDate) === "no-due-date") && (
                   <Calendar className="w-3 h-3" />
                 )}
-                <span>{format(new Date(task.dueDate), "MMM d")}</span>
+                <span>{formatDateShort(task.dueDate)}</span>
               </div>
             )}
 
