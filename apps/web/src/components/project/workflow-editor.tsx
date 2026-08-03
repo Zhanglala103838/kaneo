@@ -9,6 +9,7 @@ import {
 import { useUpsertWorkflowRule } from "@/hooks/mutations/workflow-rule/use-upsert-workflow-rule";
 import { useGetColumns } from "@/hooks/queries/column/use-get-columns";
 import { useGetWorkflowRules } from "@/hooks/queries/workflow-rule/use-get-workflow-rules";
+import { getStatusDisplayLabel } from "@/lib/i18n/domain";
 import { toast } from "@/lib/toast";
 
 const GITHUB_EVENT_TYPES = [
@@ -106,15 +107,23 @@ export default function WorkflowEditor({ projectId }: WorkflowEditorProps) {
                       "settings:workflowEditor.selectColumnPlaceholder",
                     )}
                   >
-                    {columns.find((c) => c.id === currentRule?.columnId)
-                      ?.name ??
-                      t("settings:workflowEditor.selectColumnPlaceholder")}
+                    {(() => {
+                      const selected = columns.find(
+                        (c) => c.id === currentRule?.columnId,
+                      );
+                      return selected
+                        ? getStatusDisplayLabel(selected.slug, selected.name)
+                        : t("settings:workflowEditor.selectColumnPlaceholder");
+                    })()}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {columns.map((col) => (
                     <SelectItem key={col.id} value={col.id}>
-                      {col.name}
+                      {/* Translate via the column slug, not its id: ids are
+                          CUIDs, so passing one never matches a default column
+                          and the raw English name leaks through. */}
+                      {getStatusDisplayLabel(col.slug, col.name)}
                     </SelectItem>
                   ))}
                 </SelectContent>
