@@ -1202,6 +1202,96 @@
 			"merged": "Merged",
 			"draft": "Draft",
 			"open": "Open"
+		},
+		"billing": {
+			"title": "Billing",
+			"subtitle": "Manage the Kaneo Cloud subscription for this workspace.",
+			"notEnabled": "Billing isn't enabled on this instance. Self-hosted Kaneo includes every feature, free forever.",
+			"currentPlan": {
+				"title": "Current plan",
+				"subtitle": "Your workspace's active plan and billing status."
+			},
+			"status": {
+				"active": "Active",
+				"trialing": "Trial",
+				"past_due": "Payment past due",
+				"scheduled_cancel": "Cancels soon",
+				"canceled": "Canceled",
+				"expired": "Expired",
+				"paused": "Paused"
+			},
+			"foundingFree": {
+				"title": "Founding Free",
+				"badge": "Free",
+				"description": "This workspace has free access to Kaneo Cloud as an early supporter. Thank you for being here from the start."
+			},
+			"subscription": {
+				"planName": "Kaneo Cloud {{plan}}",
+				"pricePerUser": "${{price}} / user / {{interval}}",
+				"price": "${{price}} / {{interval}}",
+				"seats_one": "{{count}} seat",
+				"seats_other": "{{count}} seats",
+				"renews": "Renews",
+				"accessEnds": "Access ends",
+				"manageHint": "Update payment method, view invoices, or cancel anytime.",
+				"manage": "Manage billing",
+				"opening": "Opening…"
+			},
+			"interval": {
+				"month": "month",
+				"year": "year",
+				"monthly": "Monthly",
+				"annual": "Annual"
+			},
+			"trial": {
+				"title": "Free trial",
+				"endedTitle": "Your trial has ended",
+				"endedDescription": "Subscribe to a plan below to keep creating and editing. Your data stays safe and exportable in the meantime.",
+				"daysLeft_one": "You have {{count}} day left on your free trial. Choose a plan to continue without interruption.",
+				"daysLeft_other": "You have {{count}} days left on your free trial. Choose a plan to continue without interruption.",
+				"chooseAfterTrial": "Choose a plan below to continue after your trial."
+			},
+			"planPicker": {
+				"title": "Choose a plan",
+				"subtitle": "Switch anytime. Cancel whenever you like.",
+				"twoMonthsFree": "2 months free",
+				"mostPopular": "Most popular",
+				"choose": "Choose {{plan}}",
+				"starting": "Starting…",
+				"paymentNote": "Payments are securely processed by Creem. Prices exclude tax where applicable.",
+				"noPermission": "Only workspace owners and admins can manage billing."
+			},
+			"plans": {
+				"personal": {
+					"name": "Personal",
+					"tagline": "For individuals",
+					"monthlySuffix": "/ month",
+					"monthlyNote": "Billed monthly",
+					"annualSuffix": "/ year",
+					"annualNote": "$3.33 / month, billed yearly",
+					"features": {
+						"singleUser": "Single user",
+						"unlimitedProjects": "Unlimited projects and tasks",
+						"backups": "Automatic backups and updates",
+						"emailSupport": "Email support"
+					}
+				},
+				"team": {
+					"name": "Team",
+					"tagline": "For teams working together",
+					"monthlySuffix": "/ user / month",
+					"monthlyNote": "Billed monthly",
+					"annualSuffix": "/ user / year",
+					"annualNote": "$4.17 / user / month, billed yearly",
+					"features": {
+						"unlimitedMembers": "Unlimited team members",
+						"unlimitedProjects": "Unlimited projects and tasks",
+						"rolesPermissions": "Workspace roles and permissions",
+						"backups": "Automatic backups and updates",
+						"prioritySupport": "Priority email support"
+					}
+				}
+			}
 		}
 	},
 	"navigation": {

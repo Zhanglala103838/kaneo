@@ -1202,6 +1202,96 @@
 			"merged": "已合并",
 			"draft": "草稿",
 			"open": "开放"
+		},
+		"billing": {
+			"title": "账单",
+			"subtitle": "管理此工作区的 Kaneo Cloud 订阅。",
+			"notEnabled": "此实例未启用账单功能。自托管的 Kaneo 包含全部功能，永久免费。",
+			"currentPlan": {
+				"title": "当前套餐",
+				"subtitle": "工作区当前生效的套餐与账单状态。"
+			},
+			"status": {
+				"active": "生效中",
+				"trialing": "试用中",
+				"past_due": "付款逾期",
+				"scheduled_cancel": "即将取消",
+				"canceled": "已取消",
+				"expired": "已过期",
+				"paused": "已暂停"
+			},
+			"foundingFree": {
+				"title": "创始免费",
+				"badge": "免费",
+				"description": "此工作区作为早期支持者，可免费使用 Kaneo Cloud。感谢你从一开始就在。"
+			},
+			"subscription": {
+				"planName": "Kaneo Cloud {{plan}}",
+				"pricePerUser": "${{price}} / 用户 / {{interval}}",
+				"price": "${{price}} / {{interval}}",
+				"seats_one": "{{count}} 个席位",
+				"seats_other": "{{count}} 个席位",
+				"renews": "续订日期",
+				"accessEnds": "访问截止",
+				"manageHint": "可随时更新支付方式、查看账单或取消订阅。",
+				"manage": "管理账单",
+				"opening": "正在打开…"
+			},
+			"interval": {
+				"month": "月",
+				"year": "年",
+				"monthly": "按月",
+				"annual": "按年"
+			},
+			"trial": {
+				"title": "免费试用",
+				"endedTitle": "试用已结束",
+				"endedDescription": "订阅下方任一套餐即可继续创建和编辑。在此期间你的数据仍然安全，并可随时导出。",
+				"daysLeft_one": "免费试用还剩 {{count}} 天。选择一个套餐即可不中断地继续使用。",
+				"daysLeft_other": "免费试用还剩 {{count}} 天。选择一个套餐即可不中断地继续使用。",
+				"chooseAfterTrial": "在下方选择一个套餐，以便试用结束后继续使用。"
+			},
+			"planPicker": {
+				"title": "选择套餐",
+				"subtitle": "可随时切换，也可随时取消。",
+				"twoMonthsFree": "立省两个月",
+				"mostPopular": "最受欢迎",
+				"choose": "选择{{plan}}",
+				"starting": "正在跳转…",
+				"paymentNote": "支付由 Creem 安全处理。价格不含适用税费。",
+				"noPermission": "只有工作区所有者和管理员可以管理账单。"
+			},
+			"plans": {
+				"personal": {
+					"name": "个人版",
+					"tagline": "适合个人使用",
+					"monthlySuffix": "/ 月",
+					"monthlyNote": "按月计费",
+					"annualSuffix": "/ 年",
+					"annualNote": "折合 $3.33 / 月，按年计费",
+					"features": {
+						"singleUser": "单用户",
+						"unlimitedProjects": "不限项目与任务数",
+						"backups": "自动备份与更新",
+						"emailSupport": "邮件支持"
+					}
+				},
+				"team": {
+					"name": "团队版",
+					"tagline": "适合协作的团队",
+					"monthlySuffix": "/ 用户 / 月",
+					"monthlyNote": "按月计费",
+					"annualSuffix": "/ 用户 / 年",
+					"annualNote": "折合 $4.17 / 用户 / 月，按年计费",
+					"features": {
+						"unlimitedMembers": "不限团队成员数",
+						"unlimitedProjects": "不限项目与任务数",
+						"rolesPermissions": "工作区角色与权限",
+						"backups": "自动备份与更新",
+						"prioritySupport": "优先邮件支持"
+					}
+				}
+			}
 		}
 	},
 	"navigation": {
