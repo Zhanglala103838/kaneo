@@ -1,9 +1,6 @@
 name: Nightly
 
 on:
-  schedule:
-    # Runs at 02:17 UTC to avoid the busiest top-of-hour scheduler window.
-    - cron: "17 2 * * *"
   workflow_dispatch:
 
 concurrency:
